@@ -1,20 +1,22 @@
 package com.smashingmods.chemlib;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import java.nio.file.Path;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.nio.file.Path;
+import com.electronwill.nightconfig.core.file.CommentedFileConfig;
+import com.electronwill.nightconfig.core.io.WritingMode;
+
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 
 public class Config {
 
     public static final Common COMMON;
-    public static final ForgeConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
 
     static {
-        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
         COMMON = specPair.getLeft();
         COMMON_SPEC = specPair.getRight();
     }
@@ -29,7 +31,7 @@ public class Config {
         public static BooleanValue renderIngotAbbreviations;
         public static BooleanValue renderPlateAbbreviations;
 
-        public Common(ForgeConfigSpec.Builder builder) {
+        public Common(ModConfigSpec.Builder builder) {
 
             builder.comment("""
                         
@@ -48,7 +50,7 @@ public class Config {
         }
     }
 
-    public static void loadConfig(ForgeConfigSpec spec, Path path) {
+    public static void loadConfig(ModConfigSpec spec, Path path) {
         final CommentedFileConfig configData = CommentedFileConfig.builder(path)
                 .sync()
                 .autosave()

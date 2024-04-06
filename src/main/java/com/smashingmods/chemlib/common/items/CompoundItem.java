@@ -1,27 +1,30 @@
 package com.smashingmods.chemlib.common.items;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.smashingmods.chemlib.ChemLib;
 import com.smashingmods.chemlib.api.Compound;
 import com.smashingmods.chemlib.api.MatterState;
 import com.smashingmods.chemlib.registry.ItemRegistry;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.network.chat.contents.PlainTextContents.LiteralContents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Map;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class CompoundItem extends Item implements Compound {
 
@@ -43,7 +46,7 @@ public class CompoundItem extends Item implements Compound {
      * @param pEffects
      */
     public CompoundItem(String pCompoundName, MatterState pMatterState, Map<String, Integer> pComponents, String pDescription, String pColor, List<MobEffectInstance> pEffects) {
-        super(new Item.Properties().tab(ItemRegistry.COMPOUND_TAB));
+        super(new Item.Properties());
         this.compoundName = pCompoundName;
         this.matterState = pMatterState;
         this.components = pComponents;
@@ -63,7 +66,7 @@ public class CompoundItem extends Item implements Compound {
      * @param pTab
      */
     public CompoundItem(String pCompoundName, MatterState pMatterState, Map<String, Integer> pComponents, String pDescription, String pColor, List<MobEffectInstance> pEffects, CreativeModeTab pTab) {
-        super(new Item.Properties().tab(pTab));
+        super(new Item.Properties());
         this.compoundName = pCompoundName;
         this.matterState = pMatterState;
         this.components = pComponents;
@@ -80,7 +83,7 @@ public class CompoundItem extends Item implements Compound {
     }
 
     public String getNamespace() {
-        return ForgeRegistries.ITEMS.getResourceKey(this).get().location().getNamespace();
+        return BuiltInRegistries.ITEM.getResourceKey(this).get().location().getNamespace();
     }
 
     @Override

@@ -1,15 +1,17 @@
 package com.smashingmods.chemlib.api;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 import com.smashingmods.chemlib.registry.FluidRegistry;
-import net.minecraft.core.Registry;
+
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.List;
-import java.util.Optional;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public interface Chemical extends ItemLike {
     String getChemicalName();
@@ -26,11 +28,10 @@ public interface Chemical extends ItemLike {
     default Optional<FluidType> getFluidTypeReference() {
         Optional<FluidType> toReturn = FluidRegistry.getFluidTypeByName(getChemicalName());
         if (toReturn.isEmpty()) {
-            toReturn = Optional.ofNullable(ForgeRegistries.FLUID_TYPES.get().getValue(ResourceLocation.tryParse(getChemicalName())));
+            toReturn = Optional.ofNullable(NeoForgeRegistries.FLUID_TYPES.get(ResourceLocation.tryParse(getChemicalName())));
         }
         if (toReturn.isEmpty()) {
-            //noinspection deprecation
-            toReturn = Optional.of(Registry.FLUID.get(ResourceLocation.tryParse(getChemicalName())).getFluidType());
+            toReturn = Optional.of(Objects.requireNonNull(BuiltInRegistries.FLUID.get(ResourceLocation.tryParse(getChemicalName()))).getFluidType());
         }
         return toReturn;
     }

@@ -1,5 +1,9 @@
 package com.smashingmods.chemlib.datagen;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
 import com.smashingmods.chemlib.ChemLib;
 import com.smashingmods.chemlib.api.Chemical;
 import com.smashingmods.chemlib.api.ChemicalItemType;
@@ -12,21 +16,18 @@ import com.smashingmods.chemlib.common.items.CompoundItem;
 import com.smashingmods.chemlib.common.items.ElementItem;
 import com.smashingmods.chemlib.registry.FluidRegistry;
 import com.smashingmods.chemlib.registry.ItemRegistry;
-import net.minecraft.data.DataGenerator;
+
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ItemModelGenerator extends ItemModelProvider {
 
-    public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, ChemLib.MODID, existingFileHelper);
+    public ItemModelGenerator(PackOutput pOutput, ExistingFileHelper existingFileHelper) {
+        super(pOutput, ChemLib.MODID, existingFileHelper);
     }
 
     @Override
@@ -55,16 +56,16 @@ public class ItemModelGenerator extends ItemModelProvider {
     private void generateElementModels() {
         for (String type : Arrays.asList("solid", "liquid", "gas")) {
             withExistingParent(String.format("item/element_%s_model", type), mcLoc("item/generated"))
-                    .texture("layer0", modLoc(String.format("items/element_%s_layer_0", type)))
-                    .texture("layer1", modLoc(String.format("items/element_%s_layer_1", type)));
+                    .texture("layer0", modLoc(String.format("item/element_%s_layer_0", type)))
+                    .texture("layer1", modLoc(String.format("item/element_%s_layer_1", type)));
         }
     }
 
     private void generateCompoundModels() {
         for (String type : Arrays.asList("solid", "liquid", "gas","dust")) {
             withExistingParent(String.format("item/compound_%s_model", type), mcLoc("item/generated"))
-                    .texture("layer0", modLoc(String.format("items/compound_%s_layer_0", type)))
-                    .texture("layer1", modLoc(String.format("items/compound_%s_layer_1", type)));
+                    .texture("layer0", modLoc(String.format("item/compound_%s_layer_0", type)))
+                    .texture("layer1", modLoc(String.format("item/compound_%s_layer_1", type)));
         }
     }
 
@@ -73,7 +74,7 @@ public class ItemModelGenerator extends ItemModelProvider {
                 .map(ChemicalItemType::getSerializedName)
                 .forEach(type ->
                         withExistingParent(String.format("item/chemical_%s_model", type), mcLoc("item/generated"))
-                                .texture("layer0", modLoc(String.format("items/%s", type))));
+                                .texture("layer0", modLoc(String.format("item/%s", type))));
     }
 
     private void registerElement(Element pElement) {
@@ -106,7 +107,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void registerBucket(BucketItem pBucket) {
-        String path = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(pBucket)).getPath();
+        String path = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(pBucket)).getPath();
         int pieces = path.split("_").length;
         String chemicalName = "";
 
@@ -128,11 +129,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 
         switch (matterState) {
             case LIQUID -> withExistingParent(String.format("item/%s", path), mcLoc("item/generated"))
-                    .texture("layer0", modLoc("items/bucket_layer_0"))
-                    .texture("layer1", modLoc("items/bucket_layer_1"));
+                    .texture("layer0", modLoc("item/bucket_layer_0"))
+                    .texture("layer1", modLoc("item/bucket_layer_1"));
             case GAS -> withExistingParent(String.format("item/%s", path), mcLoc("item/generated"))
-                    .texture("layer0", modLoc("items/gas_bucket_layer_0"))
-                    .texture("layer1", modLoc("items/gas_bucket_layer_1"));
+                    .texture("layer0", modLoc("item/gas_bucket_layer_0"))
+                    .texture("layer1", modLoc("item/gas_bucket_layer_1"));
         }
     }
 }

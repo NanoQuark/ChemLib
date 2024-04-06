@@ -1,24 +1,25 @@
 package com.smashingmods.chemlib.datagen;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
+
 import com.smashingmods.chemlib.ChemLib;
 import com.smashingmods.chemlib.api.ChemicalBlockType;
 import com.smashingmods.chemlib.registry.BlockRegistry;
 import com.smashingmods.chemlib.registry.FluidRegistry;
 import com.smashingmods.chemlib.registry.ItemRegistry;
-import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.RegistryObject;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
+
+import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class LocalizationGenerator extends LanguageProvider {
 
-    public LocalizationGenerator(DataGenerator gen, String locale) {
-        super(gen, ChemLib.MODID, locale);
+    public LocalizationGenerator(PackOutput pOutput, String locale) {
+        super(pOutput, ChemLib.MODID, locale);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     protected void addTranslations() {
 
         ItemRegistry.getElements().forEach(element -> add(String.format("item.chemlib.%s", element.getChemicalName()), StringUtils.capitalize(element.getChemicalName())));
@@ -44,7 +45,7 @@ public class LocalizationGenerator extends LanguageProvider {
             });
         }
 
-        FluidRegistry.FLUID_TYPES.getEntries().stream().map(RegistryObject::get).forEach(fluidType -> {
+        FluidRegistry.FLUID_TYPES.getEntries().stream().map(DeferredHolder::get).forEach(fluidType -> {
             int density = fluidType.getDensity();
             String key = fluidType.getDescriptionId();
             String value = key.split("\\.")[key.split("\\.").length - 1];
