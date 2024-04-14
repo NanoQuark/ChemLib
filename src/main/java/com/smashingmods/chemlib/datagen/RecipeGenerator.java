@@ -123,7 +123,7 @@ public class RecipeGenerator extends RecipeProvider {
         });
 
         // periodic table
-        Item periodicTable = ItemRegistry.getRegistryObject(ItemRegistry.REGISTRY_MISC_ITEMS, "periodic_table").get();
+        Item periodicTable = ItemRegistry.getDeferredHolder(ItemRegistry.REGISTRY_MISC_ITEMS, "periodic_table").get();
         Item hydrogen = ItemRegistry.getElementByName("hydrogen").get();
         Item paper = Items.PAPER;
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, periodicTable)

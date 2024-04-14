@@ -53,7 +53,7 @@ public class ChemicalRegistry {
             String color = object.get("color").getAsString();
 
             ItemRegistry.REGISTRY_ELEMENTS.register(elementName, () -> new ElementItem(elementName, atomicNumber, abbreviation, group, period, matterState, metalType, artificial, color, mobEffectsFactory(object)));
-            DeferredHolder<Item, ? extends Item> registryObject = ItemRegistry.getRegistryObject(ItemRegistry.REGISTRY_ELEMENTS, elementName);
+            DeferredHolder<Item, ? extends Item> registryObject = ItemRegistry.getDeferredHolder(ItemRegistry.REGISTRY_ELEMENTS, elementName);
 
             if (!artificial) {
                 switch (matterState) {
@@ -118,9 +118,9 @@ public class ChemicalRegistry {
                 case SOLID -> {
                     boolean hasItem = object.get("has_item").getAsBoolean();
                     if (!hasItem) {
-                        ItemRegistry.registerItemByType(ItemRegistry.getRegistryObject(ItemRegistry.REGISTRY_COMPOUNDS, compoundName), ChemicalItemType.COMPOUND);
+                        ItemRegistry.registerItemByType(ItemRegistry.getDeferredHolder(ItemRegistry.REGISTRY_COMPOUNDS, compoundName), ChemicalItemType.COMPOUND);
                         if (compoundName.equals("polyvinyl_chloride")) {
-                            ItemRegistry.registerItemByType(ItemRegistry.getRegistryObject(ItemRegistry.REGISTRY_COMPOUNDS, compoundName), ChemicalItemType.PLATE);
+                            ItemRegistry.registerItemByType(ItemRegistry.getDeferredHolder(ItemRegistry.REGISTRY_COMPOUNDS, compoundName), ChemicalItemType.PLATE);
                         }
                     }
                 }

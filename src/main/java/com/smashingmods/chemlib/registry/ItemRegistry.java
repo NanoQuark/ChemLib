@@ -149,7 +149,7 @@ public class ItemRegistry {
         }
     }
 
-    public static DeferredHolder<Item, ? extends Item> getRegistryObject(DeferredRegister<Item> pRegister, String pName) {
+    public static DeferredHolder<Item, ? extends Item> getDeferredHolder(DeferredRegister<Item> pRegister, String pName) {
         return pRegister.getEntries().stream().filter(item -> item.getId().getPath().equals(pName)).findFirst().get();
     }
 
