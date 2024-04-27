@@ -35,15 +35,15 @@ public class ItemRegistry {
         Each item type has a separate registry to make understanding and organizing them simpler.
      */
 
-    public static final DeferredRegister<Item> REGISTRY_ELEMENTS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_COMPOUNDS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_COMPOUND_DUSTS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_METAL_DUSTS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_NUGGETS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_INGOTS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_PLATES = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_BLOCK_ITEMS = DeferredRegister.Items.createItems(ChemLib.MODID);
-    public static final DeferredRegister<Item> REGISTRY_MISC_ITEMS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_ELEMENTS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_COMPOUNDS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_COMPOUND_DUSTS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_METAL_DUSTS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_NUGGETS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_INGOTS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_PLATES = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_BLOCK_ITEMS = DeferredRegister.Items.createItems(ChemLib.MODID);
+    public static final DeferredRegister.Items REGISTRY_MISC_ITEMS = DeferredRegister.Items.createItems(ChemLib.MODID);
 
     /*
         This section defines helper methods for getting specific objects out of the registry.

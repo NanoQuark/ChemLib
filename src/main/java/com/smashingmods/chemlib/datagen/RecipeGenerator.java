@@ -1,5 +1,7 @@
 package com.smashingmods.chemlib.datagen;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.smashingmods.chemlib.ChemLib;
 import com.smashingmods.chemlib.api.Chemical;
 import com.smashingmods.chemlib.api.ChemicalBlockType;
@@ -8,6 +10,7 @@ import com.smashingmods.chemlib.registry.BlockRegistry;
 import com.smashingmods.chemlib.registry.ItemRegistry;
 
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -21,8 +24,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 
 public class RecipeGenerator extends RecipeProvider {
-    public RecipeGenerator(PackOutput pOutput) {
-        super(pOutput);
+    public RecipeGenerator(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pFuture) {
+        super(pOutput, pFuture);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class RecipeGenerator extends RecipeProvider {
         BlockRegistry.getChemicalBlocksByType(ChemicalBlockType.LAMP).forEach(block -> {
             Chemical chemical = block.getChemical();
             ShapedRecipeBuilder.shaped(RecipeCategory.MISC, block)
-                    .define('G', Tags.Items.GLASS)
+                    .define('G', Tags.Items.GLASS_BLOCKS)
                     .define('E', chemical)
                     .pattern("GEG")
                     .pattern("EEE")

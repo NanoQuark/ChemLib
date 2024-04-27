@@ -19,6 +19,7 @@ import com.smashingmods.chemlib.common.blocks.LampBlock;
 import com.smashingmods.chemlib.common.items.CompoundItem;
 import com.smashingmods.chemlib.common.items.ElementItem;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -26,7 +27,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -149,8 +150,8 @@ public class ChemicalRegistry {
                 String effectLocation = effectObject.get("location").getAsString();
                 int effectDuration = effectObject.get("duration").getAsInt();
                 int effectAmplifier = effectObject.get("amplifier").getAsInt();
-                MobEffect mobEffect = BuiltInRegistries.MOB_EFFECT.get(new ResourceLocation(effectLocation));
-                if (mobEffect != null) {
+                Holder<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getHolder(new ResourceLocation(effectLocation)).get();
+                if (mobEffect.value() != null) {
                     effectsList.add(new MobEffectInstance(mobEffect, effectDuration, effectAmplifier));
                 }
             }
@@ -165,7 +166,7 @@ public class ChemicalRegistry {
         int temperature = pObject.has("temperature") ? pObject.get("temperature").getAsInt() : 300;
         float motionScale = pObject.has("motion_scale") ? pObject.get("motion_scale").getAsFloat() : 0.014f;
         int fallDistanceModifier = pObject.has("fall_distance_modifier") ? pObject.get("fall_distance_modifier").getAsInt() : 0;
-        BlockPathTypes pathType = pObject.has("path_type") ? BlockPathTypes.valueOf(pObject.get("path_type").getAsString().toUpperCase(Locale.ROOT)) : BlockPathTypes.WATER;
+        PathType pathType = pObject.has("path_type") ? PathType.valueOf(pObject.get("path_type").getAsString().toUpperCase(Locale.ROOT)) : PathType.WATER;
         boolean pushEntity = !pObject.has("push_entity") || pObject.get("push_entity").getAsBoolean();
         boolean canSwim = !pObject.has("can_swim") || pObject.get("can_swim").getAsBoolean();
         boolean canDrown = pObject.has("can_drown") && pObject.get("can_drown").getAsBoolean();
