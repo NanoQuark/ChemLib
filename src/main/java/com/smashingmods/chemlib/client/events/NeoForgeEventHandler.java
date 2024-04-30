@@ -25,8 +25,8 @@ public class NeoForgeEventHandler {
     @SubscribeEvent
     public static void onRenderTooltip(RenderTooltipEvent.GatherComponents event) {
         if (event.getItemStack().getItem() instanceof BucketItem bucket
-                && BuiltInRegistries.FLUID.getResourceKey(bucket.getFluid()).isPresent()
-                && BuiltInRegistries.FLUID.getResourceKey(bucket.getFluid()).get().location().getNamespace().equals(ChemLib.MODID)) {
+                && BuiltInRegistries.FLUID.getResourceKey(bucket.content).isPresent()
+                && BuiltInRegistries.FLUID.getResourceKey(bucket.content).get().location().getNamespace().equals(ChemLib.MODID)) {
 
             gatherTooltipComponents(event, bucket);
         }
@@ -38,7 +38,7 @@ public class NeoForgeEventHandler {
         for (FormattedText textElement : FluidEffectsTooltipUtility.getBucketEffectTooltipComponents(event.getItemStack())) {
             event.getTooltipElements().add(formattedTextFunction.apply(textElement));
         }
-        String namespace = BuiltInRegistries.FLUID.getResourceKey(bucket.getFluid()).get().location().getNamespace();
+        String namespace = BuiltInRegistries.FLUID.getResourceKey(bucket.content).get().location().getNamespace();
         event.getTooltipElements().add(formattedTextFunction.apply(MutableComponent.create(new LiteralContents(StringUtils.capitalize(namespace))).withStyle(ChemLib.MOD_ID_TEXT_STYLE)));
     }
 }

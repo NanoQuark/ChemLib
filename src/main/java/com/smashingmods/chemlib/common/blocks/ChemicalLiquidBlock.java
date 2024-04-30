@@ -23,7 +23,7 @@ public class ChemicalLiquidBlock extends LiquidBlock {
     private final String chemicalName;
 
     public ChemicalLiquidBlock(Supplier<? extends FlowingFluid> pFluid, String pChemicalName) {
-        super(pFluid, BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().pushReaction(PushReaction.DESTROY).liquid());
+        super(pFluid.get(), BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().pushReaction(PushReaction.DESTROY).liquid());
         this.chemicalName = pChemicalName;
     }
 

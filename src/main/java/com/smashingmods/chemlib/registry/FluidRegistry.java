@@ -89,7 +89,7 @@ public class FluidRegistry {
         DeferredHolder<Fluid, Source> fluidSource = FLUIDS.register(String.format("%s_fluid", pName), () -> new BaseFlowingFluid.Source(ref.properties));
         DeferredHolder<Fluid, Flowing> fluidFlowing = FLUIDS.register(String.format("%s_flowing", pName), () -> new BaseFlowingFluid.Flowing(ref.properties));
         DeferredHolder<Block, ChemicalLiquidBlock> liquidBlock = LIQUID_BLOCKS.register(pName, () -> new ChemicalLiquidBlock(fluidSource, pName));
-        DeferredHolder<Item, BucketItem> bucket = BUCKETS.register(String.format("%s_bucket", pName), () -> new BucketItem(fluidSource, new Item.Properties().stacksTo(1)));
+        DeferredHolder<Item, BucketItem> bucket = BUCKETS.register(String.format("%s_bucket", pName), () -> new BucketItem(fluidSource.get(), new Item.Properties().stacksTo(1)));
 
         ref.properties = new BaseFlowingFluid.Properties(fluidType, fluidSource, fluidFlowing)
                 .slopeFindDistance(pSlopeFindDistance)
@@ -185,7 +185,7 @@ public class FluidRegistry {
     public static List<BucketItem> getElementBuckets() {
         Map<Integer, BucketItem> bucketMap = new TreeMap<>();
         for(BucketItem bucket : BUCKETS.getEntries().stream().map(DeferredHolder::get).map(item -> (BucketItem) item).toList()) {
-            String path = StringUtils.removeEnd(BuiltInRegistries.FLUID.getResourceKey(bucket.getFluid()).get().location().getPath(), "_fluid");
+            String path = StringUtils.removeEnd(BuiltInRegistries.FLUID.getResourceKey(bucket.content).get().location().getPath(), "_fluid");
             ItemRegistry.getElementByName(path).ifPresent(elementItem -> bucketMap.put(elementItem.getAtomicNumber(), bucket));
         }
         return bucketMap.values().stream().toList();
@@ -194,7 +194,7 @@ public class FluidRegistry {
     public static List<BucketItem> getCompoundBuckets() {
         ArrayList<BucketItem> buckets = new ArrayList<>();
         for(BucketItem bucket : BUCKETS.getEntries().stream().map(DeferredHolder::get).map(item -> (BucketItem) item).toList()) {
-            String path = StringUtils.removeEnd(BuiltInRegistries.FLUID.getResourceKey(bucket.getFluid()).get().location().getPath(), "_fluid");
+            String path = StringUtils.removeEnd(BuiltInRegistries.FLUID.getResourceKey(bucket.content).get().location().getPath(), "_fluid");
             ItemRegistry.getCompoundByName(path).ifPresent(compoundItem -> buckets.add(bucket));
         }
         return buckets;
@@ -202,7 +202,7 @@ public class FluidRegistry {
 
     public static List<BucketItem> getSortedCompoundBuckets() {
         List<BucketItem> buckets = getCompoundBuckets();
-        buckets.sort((BucketItem b1, BucketItem b2) -> b1.getFluid().getFluidType().toString().compareToIgnoreCase(b2.getFluid().getFluidType().toString()));
+        buckets.sort((BucketItem b1, BucketItem b2) -> b1.content.getFluidType().toString().compareToIgnoreCase(b2.content.getFluidType().toString()));
         return buckets;
     }
 

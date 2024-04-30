@@ -34,7 +34,7 @@ public class FluidEffectsTooltipUtility {
     public static List<Component> getBucketEffectTooltipComponents(ItemStack pStack) {
         List<Component> componentList = new ArrayList<>();
 
-        BuiltInRegistries.FLUID.getResourceKey(((BucketItem) pStack.getItem()).getFluid()).ifPresent(fluidResourceKey -> {
+        BuiltInRegistries.FLUID.getResourceKey(((BucketItem) pStack.getItem()).content).ifPresent(fluidResourceKey -> {
             String chemicalName = StringUtils.removeEnd(fluidResourceKey.location().getPath(), "_fluid");
             AtomicReference<List<MobEffectInstance>> effectList = new AtomicReference<>();
             ItemRegistry.getElementByName(chemicalName).ifPresent(element -> effectList.set(element.getEffects()));
